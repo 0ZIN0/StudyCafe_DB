@@ -5,10 +5,6 @@ SELECT * FROM user_constraints;
 
 SELECT * FROM user_sequences;
 
-
-SELECT 'DROP TABLE "' || TABLE_NAME || '" CASCADE CONSTRAINTS;' FROM user_tables;
-
-
 -- ticket_order
 CREATE TABLE ticket_order (
 	order_id varchar2(13) 
@@ -68,21 +64,20 @@ CREATE TABLE member (
         CONSTRAINT member_id_pk PRIMARY KEY,
 	phone_number varchar2(13) 
         CONSTRAINT phone_number_nn NOT NULL 
-        CONSTRAINT phone_number_uk unique,
+        CONSTRAINT phone_number_uniq unique,
 	member_password number(6) 
         CONSTRAINT member_password_nn NOT NULL,
 	date_of_birth date 
         CONSTRAINT date_of_birth_nn NOT NULL,
 	mileage number(8) DEFAULT 0  
-        CONSTRAINT mileage_nn NOT NULL,
         CONSTRAINT mileage_chk CHECK (mileage >= 0)
+        CONSTRAINT mileage_nn NOT NULL,
 	remain_time number(10) DEFAULT 0 
+        CONSTRAINT remain_time_chk CHECK (remain_time >= 0) 
         CONSTRAINT remain_time_nn NOT NULL,
-        CONSTRAINT remain_time_chk CHECK (remain_time >= 0)
 	locker_number varchar2(3),
 	locker_password	number(6)
 );
-
 
 create sequence member_id_seq
 increment by 1
